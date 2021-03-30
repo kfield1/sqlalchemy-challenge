@@ -38,3 +38,16 @@ def welcome():
         f"/api/v1.0/[start_date format:yyyy-mm-dd]<br/>"
         f"/api/v1.0/[start_date format:yyyy-mm-dd]/[end_date format:yyyy-mm-dd]<br/>"
     )
+
+@app.route("/api/v1.0/precipitation")
+def precipitation():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of all Precipitation Data"""
+    # Query all Precipitation
+    results = session.query(Measurement.date, Measurement.prcp).\
+        filter(Measurement.date >= "2016-08-24").\
+        all()
+
+    session.close()
